@@ -119,16 +119,65 @@ Available roles include:
 
 # Authorization Strategy
 
-The system uses Role-Based Access Control (RBAC) to manage permissions.
+Authorization is enforced entirely at the backend/server level to ensure strong security and prevent any client-side manipulation.
 
-Authorization is enforced at the backend/server level to ensure security and prevent client-side manipulation.
+After successful JWT/session authentication, the system applies two different authorization strategies based on the user type.
 
-The authorization flow typically includes:
+---
 
-1. Authentication using JWT/session
-2. Role validation
-3. Ownership/resource validation
+## 1. Customer Authorization Strategy
+
+For customers, authorization is based on ownership/resource validation.
+
+The system verifies that the authenticated customer is accessing only resources that belong to them, such as:
+
+- Orders
+- Cart
+- Addresses
+- Payments
+- Wishlist
+
+Example:
+
+- A customer can access their own order
+- A customer cannot access another customer's order
+
+This type of authorization is commonly known as:
+
+- Ownership Validation
+- Resource-Based Authorization
+
+---
+
+## 2. Dashboard User Authorization Strategy
+
+For dashboard users, authorization is based on Role-Based Access Control (RBAC) and permission checks.
+
+After authentication, the system validates:
+
+1. User role
+2. Assigned permissions
+3. Allowed dashboard actions
+
+Examples:
+
+- `SUPER_ADMIN` can manage the whole system
+- `ADMIN` can manage operational data
+- `CUSTOMER_SUPPORT` can handle support tickets
+- `SELLER` can manage their products/orders
+- `DELIVERY_DRIVER` can access delivery-related operations only
+
+---
+
+# Authorization Flow
+
+The authorization flow typically follows these steps:
+
+1. JWT/session authentication
+2. User type validation
+3. Customer ownership validation OR dashboard role validation
 4. Permission checks
+5. Resource access approval/rejection
 
 ---
 
