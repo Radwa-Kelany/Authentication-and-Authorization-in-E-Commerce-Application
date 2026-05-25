@@ -135,19 +135,6 @@ Examples:
 
 ---
 
-# Security Goals
-
-This project focuses on implementing secure backend practices such as:
-
-- JWT Authentication
-- Secure password hashing
-- RBAC authorization
-- Ownership validation
-- Protected dashboard routes
-- Customer resource protection
-- Secure admin creation flow
-- Prevention of unauthorized access
-
 ```mermaid
 erDiagram
 
