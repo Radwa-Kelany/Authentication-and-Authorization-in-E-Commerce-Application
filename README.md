@@ -134,7 +134,7 @@ Examples:
 - `DELIVERY_DRIVER` can access delivery-related operations only
 
 ---
-
+# ERD
 ```mermaid
 erDiagram
 
@@ -143,10 +143,11 @@ erDiagram
         string username
         string email
         string password
+        string phone
+        string refreshToken
 
         int userTypeId FK
         int roleId FK
-        int customerId FK
     }
 
     CUSTOMER {
@@ -154,6 +155,8 @@ erDiagram
         string address
         date DOB
         string gender
+
+        int userId FK
     }
 
     USER_TYPE {
@@ -166,7 +169,7 @@ erDiagram
         string name
     }
 
-    USER ||--|| CUSTOMER : has
+    USER o|--|| CUSTOMER : has_optional
     USER ||--|| USER_TYPE : belongs_to
     USER ||--|| ROLE : assigned_to
 ```
