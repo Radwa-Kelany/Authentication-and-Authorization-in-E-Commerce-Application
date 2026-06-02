@@ -303,6 +303,11 @@ Permissions related to notification
 - notification.send
 - notification.delete
 
+Typical Roles:
+- SUPER_ADMIN
+- ADMIN
+- CUSTOMER_SUPPORT
+- System services (internal jobs)
 ---
 ## Reporting & Analytics
 
