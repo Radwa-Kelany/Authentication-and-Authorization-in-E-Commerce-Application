@@ -36,7 +36,7 @@
       * [Permission Naming Convention](#permission-naming-convention)
       * [Extensibility](#extensibility)
 
-    * [Permissions Groups](#permissions_groups)
+    * [Permissions Groups](#permissions-groups)
 
       * [Customer Service & Support](#customer-service--support)
       * [Customer Management](#customer-management)
@@ -272,7 +272,7 @@ Roles are assigned permission groups, and groups contain the actual permissions 
 
 ---
 
-### Permissions Groups
+### Permission Groups
 
 #### Customer Service & Support
 
