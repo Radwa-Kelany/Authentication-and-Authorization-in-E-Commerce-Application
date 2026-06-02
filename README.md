@@ -454,7 +454,6 @@ Examples:
 - `ADMIN` can manage operational data
 - `CUSTOMER_SUPPORT` can handle support tickets
 - `SELLER` can manage their products/orders
-- `DELIVERY_DRIVER` can access delivery-related operations only
 
 ---
 # ERD
