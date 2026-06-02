@@ -36,7 +36,7 @@
       * [Permission Naming Convention](#permission-naming-convention)
       * [Extensibility](#extensibility)
 
-    * [Permissions Groups](#permissions-groups)
+    * [Permission Groups](#permission-groups)
 
       * [Customer Service & Support](#customer-service--support)
       * [Customer Management](#customer-management)
