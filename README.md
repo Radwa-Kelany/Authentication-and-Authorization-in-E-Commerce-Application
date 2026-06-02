@@ -2,22 +2,69 @@
 
 # Table of Contents
 
-- [Introduction](#introduction)
+* [Introduction](#introduction)
 
-## Core Concepts
-- [Main Processes](#main-processes)
-- [Registration Flow](#registration-flow)
-- [Unified User Authentication Model](#unified-user-authentication-model)
-- [User Types in E-Commerce Applications](#user-types-in-e-commerce-applications)
-- [Roles for Dashboard Users](#roles-for-dashboard-users)
+  * [Main Processes](#main-processes)
 
-## Authorization Design
-- [Permission Design Strategy](#permission-design-strategy)
-- [Permissions](#permissions)
-- [Authorization Strategy](#authorization-strategy)
+* [Registration](#registration)
 
-## System Model
-- [ERD](#erd)
+  * [Registration Flow](#registration-flow)
+
+* [Authentication](#authentication)
+
+  * [Unified User Authentication Model](#unified-user-authentication-model)
+
+* [Authorization](#authorization)
+
+  * [Authorization Strategy](#authorization-strategy)
+
+    * [Customer Authorization Strategy](#1-customer-authorization-strategy)
+    * [Dashboard User Authorization Strategy](#2-dashboard-user-authorization-strategy)
+
+  * [User Types in E-Commerce Applications](#user-types-in-e-commerce-applications)
+
+    * [Customer](#1-customer)
+    * [Dashboard Users](#2-dashboard-users)
+
+  * [Roles for Dashboard Users](#roles-for-dashboard-users)
+
+  * [Assigned Permissions](#assigned-permissions)
+
+    * [Permission Design Strategy](#permission-design-strategy)
+
+      * [Benefits](#benefits)
+      * [Permission Naming Convention](#permission-naming-convention)
+      * [Extensibility](#extensibility)
+
+    * [Permissions](#permissions)
+
+      * [Customer Service & Support](#customer-service--support)
+      * [Customer Management](#customer-management)
+      * [Seller Management](#seller-management)
+      * [Catalog Management](#catalog-management)
+      * [Inventory Management](#inventory-management)
+      * [Order Management](#order-management)
+      * [Payment Management](#payment-management)
+      * [Marketing & Customer Retention](#marketing--customer-retention)
+
+        * [Coupons](#coupons)
+        * [Promotions](#promotions)
+        * [Loyalty Programs](#loyalty-programs)
+      * [Notification Management](#notification-management)
+      * [Reporting & Analytics](#reporting--analytics)
+      * [User & Access Management](#user--access-management)
+
+        * [Users](#users)
+        * [Roles](#roles)
+        * [Permissions](#permissions-1)
+      * [Audit & Compliance](#audit--compliance)
+      * [System Administration](#system-administration)
+
+        * [Super Permission Management](#super-permission-management)
+      * [Full System Access](#full-system-access)
+
+* [ERD](#erd)
+
 
 ---
 
@@ -25,9 +72,7 @@
 
 This repository explains the complete flow of authentication and authorization in E-Commerce applications, starting from user registration up to implementing Role-Based Access Control (RBAC).
 
----
-
-# Main Processes
+## Main Processes
 
 1. Registration
 2. Authentication
@@ -156,6 +201,7 @@ Available roles include:
 - `SELLER`
 
 ---
+
 ## Assigned permissions
 
 ### Permission Design Strategy
@@ -468,7 +514,7 @@ Typical Roles:
 
 ---
 
-### Full System Access
+#### Full System Access
 - system.admin
   
 Typical Roles:
