@@ -83,6 +83,192 @@ Available roles include:
 
 ---
 
+# Permissions
+
+## User Management
+
+- user.create
+- user.read
+- user.update
+- user.delete
+- user.activate
+- user.deactivate
+
+---
+
+## Customer Management
+
+- customer.read
+- customer.update
+- customer.delete
+- customer.block
+- customer.unblock
+
+---
+
+## Product Management
+
+- product.create
+- product.read
+- product.update
+- product.delete
+- product.publish
+- product.unpublish
+
+---
+
+## Category Management
+
+- category.create
+- category.read
+- category.update
+- category.delete
+
+---
+
+## Inventory Management
+
+- inventory.read
+- inventory.update
+- inventory.adjust
+
+---
+
+## Order Management
+
+- order.create
+- order.read
+- order.update
+- order.cancel
+- order.refund
+- order.complete
+
+---
+
+## Payment Management
+
+- payment.read
+- payment.process
+- payment.refund
+- payment.cancel
+
+---
+
+## Seller Management
+
+- seller.create
+- seller.read
+- seller.update
+- seller.delete
+- seller.approve
+- seller.reject
+
+---
+
+## Support Ticket Management
+
+- ticket.create
+- ticket.read
+- ticket.reply
+- ticket.assign
+- ticket.close
+- ticket.reopen
+
+---
+
+## Review Management
+
+- review.read
+- review.update
+- review.delete
+- review.moderate
+
+---
+
+## Coupon Management
+
+- coupon.create
+- coupon.read
+- coupon.update
+- coupon.delete
+- coupon.activate
+- coupon.deactivate
+
+---
+
+## Promotion Management
+
+- promotion.create
+- promotion.read
+- promotion.update
+- promotion.delete
+
+---
+
+## Loyalty Program Management
+
+- loyalty.read
+- loyalty.adjust
+- loyalty.redeem
+
+---
+
+## Notification Management
+
+- notification.create
+- notification.read
+- notification.send
+- notification.delete
+
+---
+
+## Report Management
+
+- report.read
+- report.export
+
+---
+
+## Role Management
+
+- role.create
+- role.read
+- role.update
+- role.delete
+- role.assign
+
+---
+
+## Permission Management
+
+- permission.create
+- permission.read
+- permission.update
+- permission.delete
+- permission.assign
+
+---
+
+## Audit Management
+
+- audit.read
+- audit.export
+
+---
+
+## System Administration
+
+- settings.read
+- settings.update
+- system.backup
+- system.restore
+
+---
+
+## Full System Access
+
+- system.admin
+
 # Authorization Strategy
 
 Authorization is enforced entirely at the backend/server level to ensure strong security and prevent any client-side manipulation.
@@ -110,7 +296,7 @@ Example:
 
 This type of authorization is commonly known as:
 
-- Ownership Validation
+- Ownership Validation or
 - Resource-Based Authorization
 
 ---
