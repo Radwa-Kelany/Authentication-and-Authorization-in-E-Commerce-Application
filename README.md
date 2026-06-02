@@ -1,3 +1,27 @@
+# Table of Contents
+
+- [Intro](#authentication--authorization-in-e-commerce-applications)
+
+## Core Concepts
+- [Main Processes](#main-processes)
+- [User Types in E-Commerce Applications](#user-types-in-e-commerce-applications)
+- [Registration Flow](#registration-flow)
+- [Unified User Authentication Model](#unified-user-authentication-model)
+- [Roles for Dashboard Users](#roles-for-dashboard-users)
+
+## Authorization Design
+- [Permission Design Strategy](#permission-design-strategy)
+- [Permissions](#permissions)
+- [Authorization Strategy](#authorization-strategy)
+
+## System Model
+- [ERD](#erd)
+
+---
+
+# Authentication & Authorization in E-Commerce Applications
+
+
 # Authentication & Authorization in E-Commerce Applications
 
 This repository explains the complete flow of authentication and authorization in E-Commerce applications, starting from user registration up to implementing Role-Based Access Control (RBAC).
