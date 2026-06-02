@@ -494,12 +494,21 @@ erDiagram
     PERMISSION {
         int id PK
         string name
-        string description
     }
 
-    ROLE_PERMISSION {
-        int roleId FK
+    PERMISSION_GROUP {
+        int id PK
+        string name
+    }
+
+    PERMISSION_GROUP_PERMISSION {
+        int groupId FK
         int permissionId FK
+    }
+
+    ROLE_PERMISSION_GROUP {
+        int roleId FK
+        int groupId FK
     }
 
     USER o|--|| CUSTOMER : has_optional
@@ -508,9 +517,13 @@ erDiagram
 
     USER }o--|| ROLE : assigned_role
 
-    ROLE ||--o{ ROLE_PERMISSION : contains
+    PERMISSION_GROUP ||--o{ PERMISSION_GROUP_PERMISSION : contains
 
-    PERMISSION ||--o{ ROLE_PERMISSION : assigned_to
+    PERMISSION ||--o{ PERMISSION_GROUP_PERMISSION : included_in
+
+    ROLE ||--o{ ROLE_PERMISSION_GROUP : assigned
+
+    PERMISSION_GROUP ||--o{ ROLE_PERMISSION_GROUP : granted_to
 ```
 
 
