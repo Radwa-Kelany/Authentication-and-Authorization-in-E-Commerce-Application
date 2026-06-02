@@ -169,9 +169,26 @@ erDiagram
         string name
     }
 
+    PERMISSION {
+        int id PK
+        string name
+        string description
+    }
+
+    ROLE_PERMISSION {
+        int roleId FK
+        int permissionId FK
+    }
+
     USER o|--|| CUSTOMER : has_optional
+
     USER ||--|| USER_TYPE : belongs_to
-    USER ||--|| ROLE : assigned_to
+
+    USER }o--|| ROLE : assigned_role
+
+    ROLE ||--o{ ROLE_PERMISSION : contains
+
+    PERMISSION ||--o{ ROLE_PERMISSION : assigned_to
 ```
 
 
