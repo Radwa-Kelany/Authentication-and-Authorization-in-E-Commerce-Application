@@ -31,12 +31,10 @@ The main user of the platform who can:
 
 Users who manage and operate the system, including:
 
-- Super Admin (optional)
+- Super Admin
 - Admin
 - Customer Support Agent
 - Sellers / Service Providers
-- Delivery Drivers
-
 ---
 
 # Registration Flow
@@ -47,7 +45,6 @@ Each user type has its own registration or creation flow:
 |---|---|
 | Customer | Registers using the application UI |
 | Seller | Registers using the application UI |
-| Delivery Driver | Registers using the application UI |
 | Admin | Created by the system owner or super admin |
 | Customer Support Agent | Created by admin |
 
@@ -79,34 +76,128 @@ Available roles include:
 - `ADMIN`
 - `CUSTOMER_SUPPORT`
 - `SELLER`
-- `DELIVERY_DRIVER`
+
+---
+# Permission Design Strategy
+
+Permissions are organized into **Permission Groups** based on business responsibilities rather than database structure or CRUD operations. This keeps the authorization model aligned with real business domains, making it easier to understand, maintain, and scale.
+
+Each permission group represents a core business area such as:
+
+- Customer Service & Support
+- Catalog Management
+- Inventory Management
+- Order Management
+- Marketing & Customer Retention
+- User & Access Management
+- System Administration
+
+Permissions should always be placed in the group that owns the corresponding business capability.
+
+---
+
+## Benefits
+
+- Groups permissions by business function instead of technical structure
+- Makes role assignment clearer and easier to manage
+- Improves system maintainability as it grows
+- Reduces duplication of permissions
+- Simplifies onboarding for developers and administrators
+- Allows new business domains to be added without redesigning RBAC
+
+---
+
+## Permission Naming Convention
+
+All permissions follow a consistent pattern:
+
+```text
+resource.action
+```
+
+Examples:
+
+```text
+product.create
+product.update
+order.refund
+ticket.close
+seller.approve
+user.assign_role
+```
+
+---
+
+## Extensibility
+
+New business features are introduced by adding new permission groups without changing the existing structure or naming convention.
+
+This ensures the RBAC model remains scalable and consistent over time:
+
+```text
+Role
+    ↓
+Permission Group
+    ↓
+Permission
+```
+
+Roles are assigned permission groups, and groups contain the actual permissions enforced by the authorization layer.
 
 ---
 
 # Permissions
 
-## User Management
+## Customer Service & Support
 
-- user.create
-- user.read
-- user.update
-- user.delete
-- user.activate
-- user.deactivate
+Permissions related to helping customers and resolving issues.
+
+- customer.read
+- customer.update
+- ticket.create
+- ticket.read
+- ticket.reply
+- ticket.assign
+- ticket.close
+- ticket.reopen
+- review.read
+- review.moderate
+
+Typical Roles:
+- CUSTOMER_SUPPORT
+- ADMIN
 
 ---
 
 ## Customer Management
 
+Permissions related controlling customer accounts
+
 - customer.read
-- customer.update
 - customer.delete
 - customer.block
 - customer.unblock
 
+--- 
+## Seller Management
+
+Permissions related to onboarding and managing sellers.
+
+- seller.read
+- seller.approve
+- seller.delete
+- seller.update
+- seller.suspend
+
+Typical Roles:
+- ADMIN
+- SUPER_ADMIN
+
 ---
 
-## Product Management
+## Catalog Management
+
+Permissions related to managing products and the shopping catalog.
 
 - product.create
 - product.read
@@ -114,78 +205,67 @@ Available roles include:
 - product.delete
 - product.publish
 - product.unpublish
-
----
-
-## Category Management
-
 - category.create
 - category.read
 - category.update
 - category.delete
 
+
+Typical Roles:
+- SELLER
+- ADMIN
+
 ---
 
 ## Inventory Management
+
+Permissions related to stock management.
 
 - inventory.read
 - inventory.update
 - inventory.adjust
 
+Typical Roles:
+- SELLER
+- ADMIN
+
 ---
 
 ## Order Management
 
-- order.create
+Permissions related to order processing and fulfillment.
+
 - order.read
 - order.update
 - order.cancel
 - order.refund
 - order.complete
 
+Typical Roles:
+- SELLER
+- ADMIN
+- CUSTOMER_SUPPORT
+
 ---
 
 ## Payment Management
 
+Permissions related to payment operations.
+
 - payment.read
-- payment.process
 - payment.refund
 - payment.cancel
 
----
-
-## Seller Management
-
-- seller.create
-- seller.read
-- seller.update
-- seller.delete
-- seller.approve
-- seller.reject
+Typical Roles:
+- ADMIN
 
 ---
 
-## Support Ticket Management
+## Marketing & Customer Retention
 
-- ticket.create
-- ticket.read
-- ticket.reply
-- ticket.assign
-- ticket.close
-- ticket.reopen
+Permissions related to discounts, promotions, and loyalty programs.
 
----
-
-## Review Management
-
-- review.read
-- review.update
-- review.delete
-- review.moderate
-
----
-
-## Coupon Management
+### Coupons
 
 - coupon.create
 - coupon.read
@@ -194,42 +274,61 @@ Available roles include:
 - coupon.activate
 - coupon.deactivate
 
----
-
-## Promotion Management
+### Promotions
 
 - promotion.create
 - promotion.read
 - promotion.update
 - promotion.delete
 
----
-
-## Loyalty Program Management
+### Loyalty Programs
 
 - loyalty.read
 - loyalty.adjust
-- loyalty.redeem
+- loyalty.revoke
+
+Typical Roles:
+- ADMIN
 
 ---
 
 ## Notification Management
 
-- notification.create
+Permissions related to notification
+
 - notification.read
 - notification.send
 - notification.delete
 
 ---
+## Reporting & Analytics
 
-## Report Management
+Permissions related to business insights and reporting.
 
 - report.read
 - report.export
+- analytics.read
+
+Typical Roles:
+- ADMIN
+- SUPER_ADMIN
 
 ---
 
-## Role Management
+## User & Access Management
+
+Permissions related to system users, roles, and permissions.
+
+### Users
+
+- user.create
+- user.read
+- user.update
+- user.delete
+- user.activate
+- user.deactivate
+
+### Roles
 
 - role.create
 - role.read
@@ -237,37 +336,67 @@ Available roles include:
 - role.delete
 - role.assign
 
----
+### Permissions
 
-## Permission Management
-
-- permission.create
 - permission.read
-- permission.update
-- permission.delete
 - permission.assign
 
+Typical Roles:
+- ADMIN
+- SUPER_ADMIN
+
 ---
 
-## Audit Management
+## Audit & Compliance
+
+Permissions related to auditing and compliance tracking.
 
 - audit.read
 - audit.export
 
+Typical Roles:
+- SUPER_ADMIN
+
 ---
 
 ## System Administration
+
+Permissions related to configuring and maintaining the platform.
 
 - settings.read
 - settings.update
 - system.backup
 - system.restore
 
+
+### Super Permission Management
+
+- permission.create
+- permission.update
+- permission.delete
+  
+Typical Roles:
+- SUPER_ADMIN
+
 ---
 
 ## Full System Access
-
 - system.admin
+  
+Typical Roles:
+- SUPER_ADMIN
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Authorization Strategy
 
