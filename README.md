@@ -178,6 +178,9 @@ Permissions related controlling customer accounts
 - customer.block
 - customer.unblock
 
+  Typical Roles:
+- ADMIN
+
 --- 
 ## Seller Management
 
