@@ -42,7 +42,7 @@ Users who manage and operate the system, including:
 Each user type has its own registration or creation flow:
 
 | User Type | Registration Method |
-|---|---|
+|:--|:--|
 | Customer | Registers using the application UI |
 | Seller | Registers using the application UI |
 | Admin | Created by the system owner or super admin |
