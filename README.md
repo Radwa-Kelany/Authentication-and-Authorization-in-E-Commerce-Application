@@ -1,6 +1,8 @@
+# Authentication & Authorization in E-Commerce Applications
+
 # Table of Contents
 
-- [Intro](#authentication--authorization-in-e-commerce-applications)
+- [Introduction](#introduction)
 
 ## Core Concepts
 - [Main Processes](#main-processes)
@@ -19,10 +21,7 @@
 
 ---
 
-# Authentication & Authorization in E-Commerce Applications
-
-
-# Authentication & Authorization in E-Commerce Applications
+# Introduction
 
 This repository explains the complete flow of authentication and authorization in E-Commerce applications, starting from user registration up to implementing Role-Based Access Control (RBAC).
 
