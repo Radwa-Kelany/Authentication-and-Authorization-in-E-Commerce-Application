@@ -4,37 +4,24 @@
 
 * [Introduction](#introduction)
 
-  * [Main Processes](#main-processes)
 
 * [Registration](#registration)
 
-  * [Registration Flow](#registration-flow)
 
 * [Authentication](#authentication)
 
-  * [Unified User Authentication Model](#unified-user-authentication-model)
 
 * [Authorization](#authorization)
 
   * [Authorization Strategy](#authorization-strategy)
 
-    * [Customer Authorization Strategy](#1-customer-authorization-strategy)
-    * [Dashboard User Authorization Strategy](#2-dashboard-user-authorization-strategy)
-
   * [User Types in E-Commerce Applications](#user-types-in-e-commerce-applications)
-
-    * [Customer](#1-customer)
-    * [Dashboard Users](#2-dashboard-users)
 
   * [Roles for Dashboard Users](#roles-for-dashboard-users)
 
-  * [Assigned Permissions](#assigned-permissions)
+  * [Assigned Permissions for Dashboard Users](#assigned-permissions-for-dashboard-users)
 
     * [Permission Design Strategy](#permission-design-strategy)
-
-      * [Benefits](#benefits)
-      * [Permission Naming Convention](#permission-naming-convention)
-      * [Extensibility](#extensibility)
 
     * [Permission Groups](#permission-groups)
 
@@ -46,21 +33,11 @@
       * [Order Management](#order-management)
       * [Payment Management](#payment-management)
       * [Marketing & Customer Retention](#marketing--customer-retention)
-
-        * [Coupons](#coupons)
-        * [Promotions](#promotions)
-        * [Loyalty Programs](#loyalty-programs)
       * [Notification Management](#notification-management)
       * [Reporting & Analytics](#reporting--analytics)
       * [User & Access Management](#user--access-management)
-
-        * [Users](#users)
-        * [Roles](#roles)
-        * [Permissions](#permissions-1)
       * [Audit & Compliance](#audit--compliance)
       * [System Administration](#system-administration)
-
-        * [Super Permission Management](#super-permission-management)
       * [Full System Access](#full-system-access)
 
 * [ERD](#erd)
@@ -91,7 +68,7 @@ Each user type has its own registration or creation flow:
 | Admin | Created by the system owner or super admin |
 | Customer Support Agent | Created by admin |
 
-The registrartion will be stored inside `User` model.
+The registration will be stored inside `User` model.
 
 ---
 # Authentication
@@ -202,7 +179,7 @@ Available roles include:
 
 ---
 
-## Assigned permissions
+## Assigned Permissions for Dashboard Users
 
 ### Permission Design Strategy
 

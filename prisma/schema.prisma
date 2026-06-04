@@ -1,0 +1,299 @@
+generator client {
+  provider        = "prisma-client-js"
+  output          = "../node_modules/.prisma/client"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// -----------------------------------------------------------------------------------------------------
+//                                           ENUMS
+//------------------------------------------------------------------------------------------------------
+
+enum UserTypeEnum {
+  CUSTOMER       @map("customer")
+  DASHBOARD_USER @map("dashboard_user")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+enum RoleEnum {
+  SUPER_ADMIN      @map("super_admin")
+  ADMIN            @map("admin")
+  CUSTOMER_SERVICE @map("customer_service")
+  SELLER           @map("seller")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+enum PermissionGroupEnum {
+  FULL_SYSTEM_ACCESS           @map("Full System Access")
+  CUSTOMER_SERVICE_SUPPORT     @map("Customer Service & Support")
+  CUSTOMER_MANAGEMENT          @map("Customer Management")
+  SELLER_MANAGEMENT            @map("Seller Management")
+  CATALOG_MANAGEMENT           @map("Catalog Management")
+  INVENTORY_MANAGEMENT         @map("Inventory Management")
+  ORDER_MANAGEMENT             @map("Order Management")
+  PAYMENT_MANAGEMENT           @map("Payment Management")
+  MARKETING_CUSTOMER_RETENTION @map("Marketing & Customer Retention")
+  NOTIFICATION_MANAGEMENT      @map("Notification Management")
+  REPORTING_ANALYTICS          @map("Reporting & Analytics")
+  USER_ACCESS_MANAGEMENT       @map("User & Access Management")
+  AUDIT_COMPLIANCE             @map("Audit & Compliance")
+  SYSTEM_ADMINISTRATION        @map("System Administration")
+  SUPER_PERMISSION_MANAGEMENT  @map("Super Permission Management")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+enum PermissionEnum {
+  CUSTOMER_READ    @map("customer.read")
+  CUSTOMER_UPDATE  @map("customer.update")
+  CUSTOMER_DELETE  @map("customer.delete")
+  CUSTOMER_BLOCK   @map("customer.block")
+  CUSTOMER_UNBLOCK @map("customer.unblock")
+
+  TICKET_CREATE @map("ticket.create")
+  TICKET_READ   @map("ticket.read")
+  TICKET_REPLY  @map("ticket.reply")
+  TICKET_ASSIGN @map("ticket.assign")
+  TICKET_CLOSE  @map("ticket.close")
+  TICKET_REOPEN @map("ticket.reopen")
+
+  REVIEW_READ     @map("review.read")
+  REVIEW_MODERATE @map("review.moderate")
+
+  SELLER_READ    @map("seller.read")
+  SELLER_APPROVE @map("seller.approve")
+  SELLER_DELETE  @map("seller.delete")
+  SELLER_UPDATE  @map("seller.update")
+  SELLER_SUSPEND @map("seller.suspend")
+
+  PRODUCT_CREATE    @map("product.create")
+  PRODUCT_READ      @map("product.read")
+  PRODUCT_UPDATE    @map("product.update")
+  PRODUCT_DELETE    @map("product.delete")
+  PRODUCT_PUBLISH   @map("product.publish")
+  PRODUCT_UNPUBLISH @map("product.unpublish")
+
+  CATEGORY_CREATE @map("category.create")
+  CATEGORY_READ   @map("category.read")
+  CATEGORY_UPDATE @map("category.update")
+  CATEGORY_DELETE @map("category.delete")
+
+  INVENTORY_READ   @map("inventory.read")
+  INVENTORY_UPDATE @map("inventory.update")
+  INVENTORY_ADJUST @map("inventory.adjust")
+
+  ORDER_READ     @map("order.read")
+  ORDER_UPDATE   @map("order.update")
+  ORDER_CANCEL   @map("order.cancel")
+  ORDER_REFUND   @map("order.refund")
+  ORDER_COMPLETE @map("order.complete")
+
+  PAYMENT_READ   @map("payment.read")
+  PAYMENT_REFUND @map("payment.refund")
+  PAYMENT_CANCEL @map("payment.cancel")
+
+  COUPON_CREATE     @map("coupon.create")
+  COUPON_READ       @map("coupon.read")
+  COUPON_UPDATE     @map("coupon.update")
+  COUPON_DELETE     @map("coupon.delete")
+  COUPON_ACTIVATE   @map("coupon.activate")
+  COUPON_DEACTIVATE @map("coupon.deactivate")
+
+  PROMOTION_CREATE @map("promotion.create")
+  PROMOTION_READ   @map("promotion.read")
+  PROMOTION_UPDATE @map("promotion.update")
+  PROMOTION_DELETE @map("promotion.delete")
+
+  LOYALTY_READ   @map("loyalty.read")
+  LOYALTY_ADJUST @map("loyalty.adjust")
+  LOYALTY_REVOKE @map("loyalty.revoke")
+
+  NOTIFICATION_READ   @map("notification.read")
+  NOTIFICATION_SEND   @map("notification.send")
+  NOTIFICATION_DELETE @map("notification.delete")
+
+  REPORT_READ    @map("report.read")
+  REPORT_EXPORT  @map("report.export")
+  ANALYTICS_READ @map("analytics.read")
+
+  USER_CREATE     @map("user.create")
+  USER_READ       @map("user.read")
+  USER_UPDATE     @map("user.update")
+  USER_DELETE     @map("user.delete")
+  USER_ACTIVATE   @map("user.activate")
+  USER_DEACTIVATE @map("user.deactivate")
+
+  ROLE_CREATE @map("role.create")
+  ROLE_READ   @map("role.read")
+  ROLE_UPDATE @map("role.update")
+  ROLE_DELETE @map("role.delete")
+  ROLE_ASSIGN @map("role.assign")
+
+  PERMISSION_READ   @map("permission.read")
+  PERMISSION_ASSIGN @map("permission.assign")
+  PERMISSION_CREATE @map("permission.create")
+  PERMISSION_UPDATE @map("permission.update")
+  PERMISSION_DELETE @map("permission.delete")
+
+  AUDIT_READ   @map("audit.read")
+  AUDIT_EXPORT @map("audit.export")
+
+  SETTINGS_READ   @map("settings.read")
+  SETTINGS_UPDATE @map("settings.update")
+
+  SYSTEM_BACKUP  @map("system.backup")
+  SYSTEM_RESTORE @map("system.restore")
+  SYSTEM_ADMIN   @map("system.admin")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+enum SellerStatus {
+  PENDING   @map("pending")
+  APPROVED  @map("approved")
+  REJECTED  @map("rejected")
+  SUSPENDED @map("suspended")
+}
+
+// -----------------------------------------------------------------------------------------------------
+//                       USER TYPE , ROLE , PERMISSION GROUPS & PERMISSIONS TABLES
+//------------------------------------------------------------------------------------------------------
+
+model UserType {
+  id    Int          @id @default(autoincrement())
+  name  UserTypeEnum @unique
+  users User[]
+
+  @@map("user_types")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+model Role {
+  id   Int      @id @default(autoincrement())
+  name RoleEnum @unique
+
+  permissionGroups RolePermissionGroup[]
+  users            User[]
+
+  @@map("roles")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+model PermissionGroup {
+  id   Int                 @id @default(autoincrement())
+  name PermissionGroupEnum @unique
+
+  roles       RolePermissionGroup[]
+  permissions PermissionGroupPermission[]
+
+  @@map("permission_groups")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+model Permission {
+  id   Int            @id @default(autoincrement())
+  name PermissionEnum @unique
+
+  permissionGroups PermissionGroupPermission[]
+
+  @@map("permissions")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+model RolePermissionGroup {
+  roleId            Int
+  permissionGroupId Int
+
+  role            Role            @relation(fields: [roleId], references: [id])
+  permissionGroup PermissionGroup @relation(fields: [permissionGroupId], references: [id])
+
+  @@id([roleId, permissionGroupId])
+  @@map("role_permission_groups")
+}
+
+// ──────────────────────────────────────────────────────────────────────────────────────────────────────
+
+model PermissionGroupPermission {
+  permissionGroupId Int
+  permissionId      Int
+
+  permissionGroup PermissionGroup @relation(fields: [permissionGroupId], references: [id])
+  permission      Permission      @relation(fields: [permissionId], references: [id])
+
+  @@id([permissionGroupId, permissionId])
+  @@map("permission_group_permissions")
+}
+
+// -----------------------------------------------------------------------------------------------------
+//                                           USER TABLES
+//------------------------------------------------------------------------------------------------------
+
+model User {
+  id           Int     @id @default(autoincrement())
+  firstName    String  @map("first_name")
+  lastName     String  @map("last_name")
+  email        String  @unique
+  phone        String?  @unique
+  password     String
+  refreshToken String? @map("refresh_token")
+
+  userTypeId Int  @map("user_type_id")
+  roleId     Int? @map("role_id")
+
+  isActive   Boolean @default(true)
+  isVerified Boolean @default(false)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt
+
+  userType UserType  @relation(fields: [userTypeId], references: [id])
+  role     Role?     @relation(fields: [roleId], references: [id])
+  customer Customer?
+  seller   Seller?
+
+  @@map("users")
+}
+
+// -----------------------------------------------------------------------------------------------------
+//                                           CUSTOMER TABLES
+//------------------------------------------------------------------------------------------------------
+
+model Customer {
+  id        Int       @id @default(autoincrement())
+  userId    Int       @unique @map("user_id")
+  dob       DateTime?
+  gender    String?
+  createdAt DateTime  @default(now()) @map("created_at")
+  user      User      @relation(fields: [userId], references: [id])
+
+  @@map("customers")
+}
+
+model Seller {
+  id Int @id @default(autoincrement())
+
+  userId    Int    @unique
+  storeName String
+  storeSlug String @unique
+
+  businessName   String?
+  businessNumber String?
+
+  taxNumber String?
+
+  status SellerStatus @default(PENDING)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id])
+}
+
+// ───────────────────────────────────────────────────────────────────────────────────────────────────────
