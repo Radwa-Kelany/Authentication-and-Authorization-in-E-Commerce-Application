@@ -2,46 +2,39 @@
 
 # Table of Contents
 
-* [Introduction](#introduction)
+- [Introduction](#introduction)
 
+- [Registration](#registration)
 
-* [Registration](#registration)
+- [Authentication](#authentication)
 
+- [Authorization](#authorization)
+  - [Authorization Strategy](#authorization-strategy)
 
-* [Authentication](#authentication)
+  - [User Types in E-Commerce Applications](#user-types-in-e-commerce-applications)
 
+  - [Roles for Dashboard Users](#roles-for-dashboard-users)
 
-* [Authorization](#authorization)
+  - [Assigned Permissions for Dashboard Users](#assigned-permissions-for-dashboard-users)
+    - [Permission Design Strategy](#permission-design-strategy)
 
-  * [Authorization Strategy](#authorization-strategy)
+    - [Permission Groups](#permission-groups)
+      - [Customer Service & Support](#customer-service--support)
+      - [Customer Management](#customer-management)
+      - [Seller Management](#seller-management)
+      - [Catalog Management](#catalog-management)
+      - [Inventory Management](#inventory-management)
+      - [Order Management](#order-management)
+      - [Payment Management](#payment-management)
+      - [Marketing & Customer Retention](#marketing--customer-retention)
+      - [Notification Management](#notification-management)
+      - [Reporting & Analytics](#reporting--analytics)
+      - [User & Access Management](#user--access-management)
+      - [Audit & Compliance](#audit--compliance)
+      - [System Administration](#system-administration)
+      - [Full System Access](#full-system-access)
 
-  * [User Types in E-Commerce Applications](#user-types-in-e-commerce-applications)
-
-  * [Roles for Dashboard Users](#roles-for-dashboard-users)
-
-  * [Assigned Permissions for Dashboard Users](#assigned-permissions-for-dashboard-users)
-
-    * [Permission Design Strategy](#permission-design-strategy)
-
-    * [Permission Groups](#permission-groups)
-
-      * [Customer Service & Support](#customer-service--support)
-      * [Customer Management](#customer-management)
-      * [Seller Management](#seller-management)
-      * [Catalog Management](#catalog-management)
-      * [Inventory Management](#inventory-management)
-      * [Order Management](#order-management)
-      * [Payment Management](#payment-management)
-      * [Marketing & Customer Retention](#marketing--customer-retention)
-      * [Notification Management](#notification-management)
-      * [Reporting & Analytics](#reporting--analytics)
-      * [User & Access Management](#user--access-management)
-      * [Audit & Compliance](#audit--compliance)
-      * [System Administration](#system-administration)
-      * [Full System Access](#full-system-access)
-
-* [ERD](#erd)
-
+- [ERD](#erd)
 
 ---
 
@@ -56,34 +49,39 @@ This repository explains the complete flow of authentication and authorization i
 3. Authorization
 
 ---
+
 # Registration
+
 ## Registration Flow
 
 Each user type has its own registration or creation flow:
 
-| User Type | Registration Method |
-|:--|:--|
-| Customer | Registers using the application UI |
-| Seller | Registers using the application UI |
-| Admin | Created by the system owner or super admin |
-| Customer Support Agent | Created by admin |
+| User Type              | Registration Method                        |
+| :--------------------- | :----------------------------------------- |
+| Customer               | Registers using the application UI         |
+| Seller                 | Registers using the application UI         |
+| Admin                  | Created by the system owner or super admin |
+| Customer Support Agent | Created by admin                           |
 
 The registration will be stored inside `User` model.
 
 ---
+
 # Authentication
+
 ## Unified User Authentication Model
 
-After Successful Registration process all users (execpt super admin) in the system must have:
+After Successful Registration process all users in the system must have:
 
 - Email
 - Password
 
-Then the authentication process will be implemented using  JWT/session, using refreshToken and accessToken security model.
+Then they can use them in login process. After successful login, the system will create refreshToken and accessToken by JWT. So users can be authenticated later by verifying their token payload.
 
 ---
 
 # Authorization
+
 ## Authorization Strategy
 
 Authorization is enforced entirely at the backend/server level to ensure strong security and prevent any client-side manipulation.
@@ -135,7 +133,6 @@ Examples:
 
 ---
 
-
 ## User Types in E-Commerce Applications
 
 E-Commerce systems usually contain two main categories of users:
@@ -157,6 +154,7 @@ Users who manage and operate the system, including:
 - Admin
 - Customer Support Agent
 - Sellers / Service Providers
+
 ---
 
 The `User` model contains a `type` field that determines whether the user is:
@@ -267,6 +265,7 @@ Permissions related to helping customers and resolving issues.
 - review.moderate
 
 Typical Roles:
+
 - CUSTOMER_SUPPORT
 - ADMIN
 
@@ -282,9 +281,11 @@ Permissions related controlling customer accounts
 - customer.unblock
 
 Typical Roles:
+
 - ADMIN
 
---- 
+---
+
 #### Seller Management
 
 Permissions related to onboarding and managing sellers.
@@ -296,6 +297,7 @@ Permissions related to onboarding and managing sellers.
 - seller.suspend
 
 Typical Roles:
+
 - ADMIN
 - SUPER_ADMIN
 
@@ -316,8 +318,8 @@ Permissions related to managing products and the shopping catalog.
 - category.update
 - category.delete
 
-
 Typical Roles:
+
 - SELLER
 - ADMIN
 
@@ -332,6 +334,7 @@ Permissions related to stock management.
 - inventory.adjust
 
 Typical Roles:
+
 - SELLER
 - ADMIN
 
@@ -348,6 +351,7 @@ Permissions related to order processing and fulfillment.
 - order.complete
 
 Typical Roles:
+
 - SELLER
 - ADMIN
 - CUSTOMER_SUPPORT
@@ -363,6 +367,7 @@ Permissions related to payment operations.
 - payment.cancel
 
 Typical Roles:
+
 - ADMIN
 
 ---
@@ -394,6 +399,7 @@ Permissions related to discounts, promotions, and loyalty programs.
 - loyalty.revoke
 
 Typical Roles:
+
 - ADMIN
 
 ---
@@ -407,11 +413,14 @@ Permissions related to notification
 - notification.delete
 
 Typical Roles:
+
 - SUPER_ADMIN
 - ADMIN
 - CUSTOMER_SUPPORT
 - System services (internal jobs)
+
 ---
+
 #### Reporting & Analytics
 
 Permissions related to business insights and reporting.
@@ -421,6 +430,7 @@ Permissions related to business insights and reporting.
 - analytics.read
 
 Typical Roles:
+
 - ADMIN
 - SUPER_ADMIN
 
@@ -453,6 +463,7 @@ Permissions related to system users, roles, and permissions.
 - permission.assign
 
 Typical Roles:
+
 - ADMIN
 - SUPER_ADMIN
 
@@ -466,6 +477,7 @@ Permissions related to auditing and compliance tracking.
 - audit.export
 
 Typical Roles:
+
 - SUPER_ADMIN
 
 ---
@@ -479,27 +491,30 @@ Permissions related to configuring and maintaining the platform.
 - system.backup
 - system.restore
 
-
 #### Super Permission Management
 
 - permission.create
 - permission.update
 - permission.delete
-  
+
 Typical Roles:
+
 - SUPER_ADMIN
 
 ---
 
 #### Full System Access
+
 - system.admin
-  
+
 Typical Roles:
+
 - SUPER_ADMIN
 
 ---
 
 # ERD
+
 ```mermaid
 erDiagram
 
@@ -568,5 +583,3 @@ erDiagram
 
     PERMISSION_GROUP ||--o{ ROLE_PERMISSION_GROUP : granted_to
 ```
-
-

@@ -1,5 +1,5 @@
 import { Prisma, RoleEnum, UserTypeEnum } from '@prisma/client';
-import prisma from '../../lib/prisma';
+import prisma from '../../../lib/prisma';
 import { CustomerDTO, SellerDTO, UserDTO } from './register.dto';
 
 export class RegisterRepository {

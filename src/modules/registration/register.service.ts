@@ -1,7 +1,7 @@
 import { RoleEnum, UserTypeEnum } from '@prisma/client';
 import { CustomerDTO, SellerDTO, UserDTO } from './register.dto';
 import { RegisterRepository } from './register.repository';
-import { HashPassword } from './helpers/hashPassword';
+import { HashPassword } from '../helpers/hashPassword';
 const registerRepository = new RegisterRepository();
 export class RegisterService {
   async checkUserEmail(userEmail: string) {
@@ -25,7 +25,6 @@ export class RegisterService {
     user.password = hashedPassword;
     const createdSeller = await registerRepository.createSeller(user);
   }
-
 
   async getUserTypeIdByName(type: UserTypeEnum) {
     return await registerRepository.getUserTypeIdByName(type);

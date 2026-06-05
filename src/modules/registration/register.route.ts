@@ -13,13 +13,13 @@ const router = express.Router();
 const registerController = new RegisterController();
 
 router.post(
-  '/register/seller',
+  '/seller',
   sellerTypeMiddleware,
   sellerInputValidator,
   registerController.createSeller,
 );
 router.post(
-  '/register/customer',
+  '/customer',
   customerTypeMiddleware,
   customerInputValidator,
   registerController.createCustomer,
