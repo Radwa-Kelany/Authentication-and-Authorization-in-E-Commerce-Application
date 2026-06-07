@@ -154,7 +154,7 @@ enum SessionRevocationReasonEnum {
   USER_LOGOUT        @map("user.logout")
   LOGOUT_ALL_DEVICES @map("user.logout_all_devices")
 
-  PASSWORD_CHANGED @map("password.changed")
+  PASSWORD_RESET @map("password.reset")
 
   ACCOUNT_DEACTIVATED @map("account.deactivated")
   ACCOUNT_SUSPENDED   @map("account.suspended")
@@ -260,12 +260,12 @@ model UserSession {
   id     Int @id @default(autoincrement())
   userId Int @map("user_id")
 
-  refreshToken String @map("refresh_token")
+  refreshToken String? @map("refresh_token")
 
   expiresAt DateTime @map("expires_at")
 
-  revoked       Boolean                     @default(false)
-  revokedAt     DateTime?                   @map("revoked_at")
+  revoked       Boolean                      @default(false)
+  revokedAt     DateTime?                    @map("revoked_at")
   revokedReason SessionRevocationReasonEnum? @map("revoked_reason")
 
   createdAt DateTime @default(now()) @map("created_at")
@@ -340,6 +340,8 @@ model Seller {
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id])
+
+  @@map("sellers")
 }
 
 // ───────────────────────────────────────────────────────────────────────────────────────────────────────

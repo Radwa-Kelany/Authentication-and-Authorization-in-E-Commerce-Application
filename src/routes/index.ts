@@ -1,9 +1,9 @@
 import express from 'express';
-import { registerRouter } from '../modules/registration/register.route';
-import { authRouter } from '../modules/auth.route';
+import { registerRouter } from '../modules/Auth/registration/register.route';
+import { authRouter } from '../modules/Auth/auth.route';
 
 const router = express.Router();
 
-router.use('/auth', authRouter);
+
 
 export default router;

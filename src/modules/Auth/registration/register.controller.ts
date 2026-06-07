@@ -6,20 +6,25 @@ const registerService = new RegisterService();
 export class RegisterController {
   async createCustomer(req: Request, res: Response) {
     const user: CustomerDTO = req.body;
+
     try {
       const createdUser = await registerService.createCustomer(user);
-      res.status(201).json(createdUser);
-    } catch (error) {
-      res.status(400).json({ error });
+      res.status(201).json({
+        message: `Customer account with email ${createdUser.email} created successfully`,
+      });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
     }
   }
   async createSeller(req: Request, res: Response) {
     const user: SellerDTO = req.body;
     try {
       const createdUser = await registerService.createSeller(user);
-      res.status(201).json(createdUser);
-    } catch (error) {
-      res.status(400).json({ error });
+      res.status(201).json({
+        message: `Customer account with email ${createdUser.email} created successfully`,
+      });
+    } catch (error: any) {
+      res.status(400).json({ error: error.message });
     }
   }
 }

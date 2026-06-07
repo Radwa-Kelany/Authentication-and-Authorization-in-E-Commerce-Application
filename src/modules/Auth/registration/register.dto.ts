@@ -5,6 +5,7 @@ export interface UserDTO {
   phone: string;
   password: string;
   userTypeId: number;
+  roleId?: number;
 }
 
 export interface CustomerDTO extends UserDTO {

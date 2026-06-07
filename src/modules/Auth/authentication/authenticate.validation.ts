@@ -7,3 +7,9 @@ export const loginSchema = z.object({
     .min(8, 'Password must be at least 8 characters')
     .max(100, 'Password must not exceed 100 characters'),
 });
+export const forgetPasswordSchema = z.object({
+  email: z.string().trim().email('Invalid email address'),
+});
+export const resetPasswordSchema = z.object({
+  email: z.string().trim().email('Invalid email address'),
+});

@@ -4,6 +4,5 @@ export interface loginDTO {
 }
 export interface sessionDTO {
   userId: number;
-  refreshToken: string;
   expiresAt: Date;
 }

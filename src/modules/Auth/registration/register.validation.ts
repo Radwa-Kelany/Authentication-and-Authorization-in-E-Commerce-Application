@@ -26,10 +26,6 @@ export const UserSchema = z.object({
     .min(8, 'Password must be at least 8 characters')
     .max(100, 'Password must not exceed 100 characters'),
 
-  userTypeId: z.coerce
-    .number()
-    .int('User type ID must be an integer')
-    .positive('User type ID must be greater than 0'),
 });
 
 export const SellerSchema = z.object({
