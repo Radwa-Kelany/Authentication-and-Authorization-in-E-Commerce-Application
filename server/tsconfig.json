@@ -11,7 +11,8 @@
     "rootDir": ".",
     "outDir": "./dist",
     "types": [
-      "node"
+      "node",
+      "jest"
     ],
     "isolatedModules": true,
   },

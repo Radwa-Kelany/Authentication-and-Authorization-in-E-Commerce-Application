@@ -1,7 +1,4 @@
 import * as bcrypt from 'bcrypt';
-import dotenv from 'dotenv';
-
-dotenv.config();
 export class HashPassword {
   static async hashPassword(password: string) {
     const hash = await bcrypt.hash(password, 10);

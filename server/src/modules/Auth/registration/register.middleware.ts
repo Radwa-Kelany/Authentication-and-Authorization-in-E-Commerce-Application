@@ -79,7 +79,6 @@ export const sellerTypeMiddleware = async (
   const userType = await registerService.getUserTypeIdByName(
     UserTypeEnum.DASHBOARD_USER,
   );
-  console.log(userType);
   if (!userType) throw new Error('sellerTypeId is null');
   const role = await registerService.getRoleIdByName(RoleEnum.SELLER);
   if (!role) throw new Error('sellerRoleId is null');
