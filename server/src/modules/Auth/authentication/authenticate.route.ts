@@ -13,9 +13,8 @@ const authenticateController = new AuthenticateController();
 router.post('/login', loginInputValidator, authenticateController.login);
 
 // need to be put after auth middleware
-router.post(
+router.get(
   '/refresh',
-  authMiddleware,
   authenticateController.refresh,
 );
 

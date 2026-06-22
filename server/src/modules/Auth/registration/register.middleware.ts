@@ -2,13 +2,45 @@ import { Request, Response, NextFunction } from 'express';
 import { RegisterService } from './register.service';
 import { UserTypeEnum, RoleEnum } from '@prisma/client';
 import {
+  SendOTPSchema,
+  VerifyOTPSchema,
   UserSchema,
   CustomerSchema,
   SellerSchema,
 } from './register.validation';
 
 import { StatusCodes } from 'http-status-codes';
+import { errorMessage } from '../../../error/error.message';
 const registerService = new RegisterService();
+
+export const sendOTPInputValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const result = SendOTPSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      error: 'Validation failed',
+      errors: result.error.issues,
+    });
+  }
+  next();
+};
+export const verifyOTPInputValidator = (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  const result = VerifyOTPSchema.safeParse(req.body);
+  if (!result.success) {
+    return res.status(StatusCodes.BAD_REQUEST).json({
+      error: 'Validation failed',
+      errors: result.error.issues,
+    });
+  }
+  next();
+};
 
 export const customerInputValidator = (
   req: Request,
@@ -17,16 +49,14 @@ export const customerInputValidator = (
 ) => {
   const result1 = UserSchema.safeParse(req.body);
   const result2 = CustomerSchema.safeParse(req.body);
-
-  const errors = [
+  const error = [
     ...(result1.success ? [] : result1.error.issues),
     ...(result2.success ? [] : result2.error.issues),
   ];
-
-  if (errors.length > 0) {
+  if (error.length > 0) {
     return res.status(StatusCodes.BAD_REQUEST).json({
-      message: 'Validation failed',
-      errors,
+      error: 'Validation failed',
+      errors: error,
     });
   }
 
@@ -41,7 +71,11 @@ export const customerTypeMiddleware = async (
   const userType = await registerService.getUserTypeIdByName(
     UserTypeEnum.CUSTOMER,
   );
-  if (!userType) throw new Error('customerTypeId is null');
+  if (!userType) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ error: errorMessage.USER_TYPE_NOT_FOUND.message });
+  }
   const { id } = userType;
   req.body.userTypeId = id;
   next();
@@ -79,9 +113,12 @@ export const sellerTypeMiddleware = async (
   const userType = await registerService.getUserTypeIdByName(
     UserTypeEnum.DASHBOARD_USER,
   );
-  if (!userType) throw new Error('sellerTypeId is null');
   const role = await registerService.getRoleIdByName(RoleEnum.SELLER);
-  if (!role) throw new Error('sellerRoleId is null');
+  if (!userType || !role) {
+    return res
+      .status(StatusCodes.NOT_FOUND)
+      .json({ error: `${errorMessage.USER_TYPE_NOT_FOUND.message} or ${errorMessage.ROLE_NOT_FOUND.message}` });
+  }
 
   const { id: userTypeId } = userType;
   const { id: roleId } = role;

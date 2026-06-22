@@ -1,4 +1,4 @@
-import { Prisma, RoleEnum, UserTypeEnum } from '@prisma/client';
+import { Prisma, RoleEnum, UserTypeEnum, PermissionEnum } from '@prisma/client';
 import prisma from '../../../../lib/prisma';
 import { CustomerDTO, SellerDTO, UserDTO } from '../registration/register.dto';
 import { sessionDTO } from '../authentication/authenticate.dto';
@@ -39,7 +39,7 @@ export class AuthRepository {
     });
   }
   async createCustomer(user: CustomerDTO, tx: Prisma.TransactionClient) {
-    return await tx.user.create({
+    const customer = await tx.user.create({
       data: {
         firstName: user.firstName,
         lastName: user.lastName,
@@ -56,6 +56,7 @@ export class AuthRepository {
       },
       include: { customer: true },
     });
+    return customer;
   }
 
   // Seller Model
@@ -96,6 +97,9 @@ export class AuthRepository {
   async getRoleIdByName(type: RoleEnum) {
     return await prisma.role.findUnique({ where: { name: type } });
   }
+  async getRoleNameById(id: number) {
+    return await prisma.role.findUnique({ where: { id } });
+  }
 
   // Session Model
 
@@ -106,6 +110,22 @@ export class AuthRepository {
     sessionInput: sessionDTO,
     tx: Prisma.TransactionClient,
   ) {
+    const existingSession = await tx.userSession.findFirst({
+      where: {
+        userId: sessionInput.userId,
+        device: sessionInput.device,
+      },
+    });
+
+    if (existingSession) {
+      return await tx.userSession.update({
+        where: {
+          id: existingSession.id,
+        },
+        data: {},
+      });
+    }
+
     return await tx.userSession.create({
       data: sessionInput,
     });
@@ -141,9 +161,16 @@ export class AuthRepository {
 
   // Permission Model
 
-  async getPermissionsByRoleId(roleId: number) {
-    return await prisma.permission.findMany({
+  async hasPermissionByRoleId(
+    roleId: number,
+    permissionNames: PermissionEnum[],
+  ) {
+    return await prisma.permission.findFirst({
       where: {
+        name: {
+          in: permissionNames,
+        },
+
         permissionGroups: {
           some: {
             permissionGroup: {

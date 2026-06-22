@@ -11,10 +11,7 @@ export class EmailService {
     },
   });
 
-  async sendPasswordResetEmail(
-    email: string,
-    resetLink: string,
-  ) {
+  async sendPasswordResetEmail(email: string, resetLink: string) {
     await this.transporter.sendMail({
       from: process.env.MAIL_FROM,
       to: email,
@@ -34,6 +31,29 @@ export class EmailService {
 
         <p>If you didn't request this, you can ignore this email.</p>
       `,
+    });
+  }
+
+
+  async sendOTPEmail(to: string, otp: string) {
+
+    const info = await this.transporter.sendMail({
+      from: `"MyApp" <${process.env.MAIL_FROM}>`,
+      to,
+      subject: 'Your verification code',
+      text: `Your OTP is: ${otp}. It expires in 10 minutes.`,
+      html: `
+      <div style="font-family: sans-serif; max-width: 400px;">
+        <h2>Verify your email</h2>
+        <p>Use the code below to complete your registration:</p>
+        <div style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #333; margin: 24px 0;">
+          ${otp}
+        </div>
+        <p style="color: #888; font-size: 13px;">
+          This code expires in 10 minutes. Do not share it with anyone.
+        </p>
+      </div>
+    `,
     });
   }
 }

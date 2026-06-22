@@ -1,7 +1,8 @@
 export interface UserDTO {
+  verified_token: string;
+  email: string;
   firstName: string;
   lastName: string;
-  email: string;
   phone: string;
   password: string;
   userTypeId: number;
